@@ -1,1 +1,0 @@
-# practika-p-16

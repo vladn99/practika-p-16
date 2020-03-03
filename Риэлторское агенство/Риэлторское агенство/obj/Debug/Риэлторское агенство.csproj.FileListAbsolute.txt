@@ -1,0 +1,78 @@
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\bin\Debug\base.mdf
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\bin\Debug\base_log.ldf
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe.config
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\bin\Debug\Риэлторское агенство.pdb
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\obj\Debug\Риэлторское агенство.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Properties.Resources.resources
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\obj\Debug\Риэлторское агенство.csproj.GenerateResource.cache
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\obj\Debug\Риэлторское агенство.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\obj\Debug\Риэлторское агенство.exe
+C:\Users\Admin\Desktop\Производственная практика\Риэлторское агенство\obj\Debug\Риэлторское агенство.pdb
+D:\Практикант\Риэлторское агенство\bin\Debug\base.mdf
+D:\Практикант\Риэлторское агенство\bin\Debug\base_log.ldf
+D:\Практикант\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe.config
+D:\Практикант\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe
+D:\Практикант\Риэлторское агенство\bin\Debug\Риэлторское агенство.pdb
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Properties.Resources.resources
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское агенство.csproj.GenerateResource.cache
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское агенство.exe
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское агенство.pdb
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form1.resources
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form2.resources
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form3.resources
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form4.resources
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form5.resources
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form6.resources
+D:\Практикант\Риэлторское агенство\obj\Debug\Риэлторское агенство.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\Риэлторское агенство\bin\Debug\base.mdf
+C:\Users\Admin\Desktop\Риэлторское агенство\bin\Debug\base_log.ldf
+C:\Users\Admin\Desktop\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe.config
+C:\Users\Admin\Desktop\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe
+C:\Users\Admin\Desktop\Риэлторское агенство\bin\Debug\Риэлторское агенство.pdb
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form1.resources
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form2.resources
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form3.resources
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form4.resources
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form5.resources
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form6.resources
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Properties.Resources.resources
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.csproj.GenerateResource.cache
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.exe
+C:\Users\Admin\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.pdb
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\bin\Debug\base.mdf
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\bin\Debug\base_log.ldf
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe.config
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\bin\Debug\Риэлторское агенство.pdb
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.csprojAssemblyReference.cache
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form1.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form2.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form3.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form4.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form5.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form6.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Properties.Resources.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.csproj.GenerateResource.cache
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.exe
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское агенство.pdb
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form7.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\bin\Debug\base.mdf
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\bin\Debug\base_log.ldf
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe.config
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\bin\Debug\Риэлторское агенство.exe
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\bin\Debug\Риэлторское агенство.pdb
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form1.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form2.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form3.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form4.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form5.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form6.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Form7.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское_агенство.Properties.Resources.resources
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское агенство.csproj.GenerateResource.cache
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское агенство.exe
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское агенство.pdb
+C:\Users\Noskov.VA\Desktop\Риэлторское агенство\Риэлторское агенство\obj\Debug\Риэлторское агенство.csprojAssemblyReference.cache
