@@ -7,12 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace Риэлторское_агенство
 {
     public partial class Form4 : Form
     {
         private string[] arr = null;
+        private string[] arr_for_numbs = null;
+        private string substr = "";
+
         public Form4()
         {
             InitializeComponent();
@@ -41,6 +45,32 @@ namespace Риэлторское_агенство
                 arr[i] = arr[i].Replace(id_kl.ToString(), per.Replace("&", ""));
             }
             comboBox1.Items.AddRange(arr);
+        }
+
+        private void comboBox1_TextChanged(object sender, EventArgs e)
+        {
+            string str = comboBox1.Text;
+            char number;
+            foreach (var item in str)
+            {
+               number = item;
+               if (Char.IsDigit(number))
+               {
+                   substr += number;
+               }
+               else
+                   substr += " ";
+            }
+            substr = Regex.Replace(substr, @"\s+", " ");
+            arr_for_numbs = substr.Split(' ');
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string str = comboBox1.Text;
+            Match city = Regex.Match(str, @"Город:\S*");
+            Match street = Regex.Match(str, @"Улица:\S*");
+            MessageBox.Show(street.Value.ToString());
         }
     }
 }

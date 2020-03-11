@@ -119,7 +119,7 @@ class @base
             {
                 while (reader.Read())
                 {
-                    dat += reader.GetInt32(0) + " Дом Цена: от " + reader.GetInt32(1) + " до " + reader.GetInt32(2) + " Город:" + reader.GetString(5) + " Улица:" + reader.GetString(6) + " Этажность: от " + reader.GetInt32(7) + " до " + reader.GetInt32(8) + " Кол-во комнат: от" + reader.GetInt32(9) + " до " + reader.GetInt32(10) + " Площадь: от " + reader.GetInt32(11) + " до " + reader.GetInt32(12) + " Риэлтор:" + reader.GetInt32(3) + " Клиент:" + reader.GetInt32(4) +" &";
+                    dat += reader.GetInt32(0) + " Дом Цена:от " + reader.GetInt32(1) + " до " + reader.GetInt32(2) + " Город:" + reader.GetString(5) + " Улица:" + reader.GetString(6) + " Этажность:от " + reader.GetInt32(7) + " до " + reader.GetInt32(8) + " Кол-во комнат:от " + reader.GetInt32(9) + " до " + reader.GetInt32(10) + " Площадь:от " + reader.GetInt32(11) + " до " + reader.GetInt32(12) + " Риэлтор:" + reader.GetInt32(3) + " Клиент:" + reader.GetInt32(4) +" &";
                 }
             }
             else if (type == "kw")
