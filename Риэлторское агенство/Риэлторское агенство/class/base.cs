@@ -128,7 +128,7 @@ class @base
                 {
                     try
                     {
-                        dat += reader.GetInt32(0) + " Квартира Город:" + reader.GetString(1) + " Улица:" + reader.GetString(2) + " № дома:" + reader.GetInt32(3) + " № квартиры:" + reader.GetInt32(4) + " Этаж:" + reader.GetInt32(5) + " Кол-во комнат:" + reader.GetInt32(6) + " Площадь:" + reader.GetInt32(7) + "&";
+                        dat += reader.GetInt32(0) + " Квартира Цена:от " + reader.GetInt32(1) + " до " + reader.GetInt32(2) + " Город:" + reader.GetString(5) + " Улица:" + reader.GetString(6) + " Этаж:от " + reader.GetInt32(7) + " до " + reader.GetInt32(8) + " Кол-во комнат:от " + reader.GetInt32(9) + " до " + reader.GetInt32(10) + " Площадь:от " + reader.GetInt32(11) + " до " + reader.GetInt32(12) + " Риэлтор:" + reader.GetInt32(3) + " Клиент:" + reader.GetInt32(4) + " &";
                     }
                     catch
                     {
@@ -140,14 +140,11 @@ class @base
             {
                 while (reader.Read())
                 {
-                    dat += reader.GetInt32(0) + " Земля Город:" + reader.GetString(1) + " Улица:" + reader.GetString(2) + " Площадь:" + reader.GetInt32(3) + "&";
+                    dat += reader.GetInt32(0) + " Земля Цена:от " + reader.GetInt32(1) + " до " + reader.GetInt32(2) + " Город:" + reader.GetString(5) + " Улица:" + reader.GetString(6) + " Площадь:от " + reader.GetInt32(7) + " до " + reader.GetInt32(8) + " Риэлтор:" + reader.GetInt32(3) + " Клиент:" + reader.GetInt32(4) + " &";
                 }
             }
         }
         connection.Close();
-        //smena_zaprosa("select distinct agent.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_ag + " and klient.Id <> " + id_ag + " and man.dop_info = agent.Id");
-        //bool per = proverka_znachenei_v_bd();
-        //dat += " Риэлтор: " + data.Replace("&", "");
         return dat;
     }
 }

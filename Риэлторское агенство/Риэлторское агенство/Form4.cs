@@ -29,8 +29,12 @@ namespace Риэлторское_агенство
 
         private void Form4_Load(object sender, EventArgs e)
         {
-            @base @base = new @base("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_h.minetag, filter_h.maxetag, filter_h.minrooms, filter_h.maxrooms, filter_h.mins, filter_h.maxs from potr, filter_h where potr.dop_info = filter_h.Id");
+            @base @base = new @base("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_h.minetag, filter_h.maxetag, filter_h.minrooms, filter_h.maxrooms, filter_h.mins, filter_h.maxs from potr, filter_h where potr.dop_info = filter_h.Id and potr.obj = N'Дом'");
             string s = @base.vuvod_zakazov("house");
+            @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_kw.minetag, filter_kw.maxetag, filter_kw.minrooms, filter_kw.maxrooms, filter_kw.mins, filter_kw.maxs from potr, filter_kw where potr.dop_info = filter_kw.Id and potr.obj = N'Квартира'");
+            s += @base.vuvod_zakazov("kw");
+            @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_l.mins, filter_l.maxs from potr, filter_l where potr.dop_info = filter_l.Id and potr.obj = N'Земля'");
+            s += @base.vuvod_zakazov("land");
             comboBox1.Items.Clear();
             arr = s.Split('&');
             for (int i = 0; i < arr.Length - 1; i++)
@@ -68,9 +72,8 @@ namespace Риэлторское_агенство
         private void button1_Click(object sender, EventArgs e)
         {
             string str = comboBox1.Text;
-            Match city = Regex.Match(str, @"Город:\S*");
-            Match street = Regex.Match(str, @"Улица:\S*");
-            MessageBox.Show(street.Value.ToString());
+            string city = Regex.Match(str, @"Город:\S*").ToString().Replace("Город:", "");
+            string street = Regex.Match(str, @"Улица:\S*").ToString().Replace("Улица:", "");
         }
     }
 }
