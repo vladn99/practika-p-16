@@ -14,7 +14,7 @@ namespace Риэлторское_агенство
     public partial class Form4 : Form
     {
         private string[] arr = null;
-        private string[] arr_for_numbs = null;
+        private string[] arr_for_numbs_potr = null;
         private string substr = "";
 
         public Form4()
@@ -24,7 +24,9 @@ namespace Риэлторское_агенство
 
         private void Form4_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            this.Hide();
+            Form1 form1 = new Form1();
+            form1.Show();
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -36,19 +38,24 @@ namespace Риэлторское_агенство
             @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_l.mins, filter_l.maxs from potr, filter_l where potr.dop_info = filter_l.Id and potr.obj = N'Земля'");
             s += @base.vuvod_zakazov("land");
             comboBox1.Items.Clear();
-            arr = s.Split('&');
-            for (int i = 0; i < arr.Length - 1; i++)
+            if (s == "")
+                comboBox1.Items.Add("Отсутствуют данные в БД");
+            else
             {
-                int id_ag = Convert.ToInt32(arr[i].Substring(arr[i].IndexOf('Р')).Replace("Риэлтор:", "").Remove(arr[i].Substring(arr[i].IndexOf('Р')).Replace("Риэлтор:", "").IndexOf(" ")));
-                int id_kl = Convert.ToInt32(arr[i].Substring(arr[i].LastIndexOf(':') + 1).Replace("Клиент:", "").Remove(arr[i].Substring(arr[i].LastIndexOf(':') + 1).Replace("Клиент:", "").IndexOf(" ")));
-                @base.smena_zaprosa("select distinct agent.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_ag + " and klient.Id <> " + id_ag + " and man.dop_info = agent.Id");
-                string per = @base.vuvod();
-                arr[i] = arr[i].Replace(id_ag.ToString(), per.Replace("&", ""));
-                @base.smena_zaprosa("select distinct klient.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_kl + " and agent.Id <> " + id_kl + " and man.dop_info = klient.Id");
-                per = @base.vuvod();
-                arr[i] = arr[i].Replace(id_kl.ToString(), per.Replace("&", ""));
+                arr = s.Split('&');
+                for (int i = 0; i < arr.Length - 1; i++)
+                {
+                    int id_ag = Convert.ToInt32(arr[i].Substring(arr[i].IndexOf('Р')).Replace("Риэлтор:", "").Remove(arr[i].Substring(arr[i].IndexOf('Р')).Replace("Риэлтор:", "").IndexOf(" ")));
+                    int id_kl = Convert.ToInt32(arr[i].Substring(arr[i].LastIndexOf(':') + 1).Replace("Клиент:", "").Remove(arr[i].Substring(arr[i].LastIndexOf(':') + 1).Replace("Клиент:", "").IndexOf(" ")));
+                    @base.smena_zaprosa("select distinct agent.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_ag + " and klient.Id <> " + id_ag + " and man.dop_info = agent.Id");
+                    string per = @base.vuvod();
+                    arr[i] = arr[i].Replace(id_ag.ToString(), per.Replace("&", ""));
+                    @base.smena_zaprosa("select distinct klient.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_kl + " and agent.Id <> " + id_kl + " and man.dop_info = klient.Id");
+                    per = @base.vuvod();
+                    arr[i] = arr[i].Replace(id_kl.ToString(), per.Replace("&", ""));
+                }
+                comboBox1.Items.AddRange(arr);
             }
-            comboBox1.Items.AddRange(arr);
         }
 
         private void comboBox1_TextChanged(object sender, EventArgs e)
@@ -66,14 +73,17 @@ namespace Риэлторское_агенство
                    substr += " ";
             }
             substr = Regex.Replace(substr, @"\s+", " ");
-            arr_for_numbs = substr.Split(' ');
+            arr_for_numbs_potr = substr.Split(' ');
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string str = comboBox1.Text;
-            string city = Regex.Match(str, @"Город:\S*").ToString().Replace("Город:", "");
-            string street = Regex.Match(str, @"Улица:\S*").ToString().Replace("Улица:", "");
+            //string str = comboBox1.Text;
+            //string city = Regex.Match(str, @"Город:\S*").ToString().Replace("Город:", "");
+            //string street = Regex.Match(str, @"Улица:\S*").ToString().Replace("Улица:", "");
+            @base @base = new @base("select obj.Id, obj.city, obj.street, obj.nm_h, house.etag, house.rooms, house.s, predlog.agent, predlog.klient from obj, house, predlog where obj.dop_inf = house.Id and obj.Id = predlog.obj");
+            string ss = @base.vuvod_obj("house", true);
+            MessageBox.Show(ss);
         }
     }
 }

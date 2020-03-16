@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
+
+using System.Windows.Forms;
 
 class @base
 {
@@ -11,6 +14,8 @@ class @base
     SqlConnection connection = new SqlConnection(ConnectionString);
     private string data = "";
     private string sqlExpression = "";
+    private bool zapis_ag_and_kl = false;
+    private string fio = "";
     public @base(string sqlExpression) 
     {
         smena_zaprosa(sqlExpression);
@@ -24,7 +29,8 @@ class @base
     }
     public Boolean proverka_znachenei_v_bd()
     {
-        this.data = "";
+        if(zapis_ag_and_kl == false)
+            this.data = "";
         Boolean rez;
         connection.Open();
         SqlCommand command = new SqlCommand(sqlExpression, connection);
@@ -35,6 +41,11 @@ class @base
             {
                 try
                 {
+                    if (zapis_ag_and_kl == true)
+                    {
+                        fio = reader.GetInt32(0) + " " + reader.GetString(1) + " " + reader.GetString(2) + " " + reader.GetString(3);
+                        continue;
+                    }
                     data += reader.GetInt32(0) + " " + reader.GetString(1) + " " + reader.GetString(2) + " " + reader.GetString(3) + "&";
                 }
                 catch 
@@ -66,8 +77,9 @@ class @base
         return data;
     }
 
-    public string vuvod_obj(string type) 
+    public string vuvod_obj(string type, bool btn_pow)
     {
+        this.zapis_ag_and_kl = btn_pow;
         this.data = "";
         connection.Open();
         SqlCommand command = new SqlCommand(sqlExpression, connection);
@@ -78,7 +90,16 @@ class @base
             {
                 while (reader.Read())
                 {
-                    data += reader.GetInt32(0) + " Дом Город:" + reader.GetString(1) + " Улица:" + reader.GetString(2) + " № дома:" + reader.GetInt32(3) + " Этажность:" + reader.GetInt32(4) + " Кол-во комнат:" + reader.GetInt32(5) + " Площадь:" + reader.GetInt32(6) + "&";
+                    try
+                    {
+                        data += reader.GetInt32(0) + " Дом Город:" + reader.GetString(1) + " Улица:" + reader.GetString(2) + " № дома:" + reader.GetInt32(3) + " Этажность:" + reader.GetInt32(4) + " Кол-во комнат:" + reader.GetInt32(5) + " Площадь:" + reader.GetInt32(6) + "&";
+                        if (zapis_ag_and_kl == true)
+                            data = data.Remove(data.Length - 1, 1) + " Риелтор:" + reader.GetInt32(7) + " Клиент:" + reader.GetInt32(8)+ " &";
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                 }
             }
             else if (type == "kw")
@@ -88,6 +109,8 @@ class @base
                     try
                     {
                         data += reader.GetInt32(0) + " Квартира Город:" + reader.GetString(1) + " Улица:" + reader.GetString(2) + " № дома:" + reader.GetInt32(3) + " № квартиры:" + reader.GetInt32(4) + " Этаж:" + reader.GetInt32(5) + " Кол-во комнат:" + reader.GetInt32(6) + " Площадь:" + reader.GetInt32(7) + "&";
+                        if (zapis_ag_and_kl == true)
+                            data = data.Remove(data.Length - 1, 1) + " Риелтор:" + reader.GetInt32(8) + " Клиент:" + reader.GetInt32(9) + " &";
                     }
                     catch
                     {
@@ -95,15 +118,29 @@ class @base
                     }
                 }
             }
-            else if(type == "land")
+            else if (type == "land")
             {
                 while (reader.Read())
                 {
-                    data += reader.GetInt32(0) + " Земля Город:" + reader.GetString(1) + " Улица:" + reader.GetString(2) + " Площадь:" + reader.GetInt32(3) + "&";
+                    try
+                    {
+                        data += reader.GetInt32(0) + " Земля Город:" + reader.GetString(1) + " Улица:" + reader.GetString(2) + " Площадь:" + reader.GetInt32(3) + "&";
+                        if (zapis_ag_and_kl == true)
+                            data = data.Remove(data.Length - 1, 1) + " Риелтор:" + reader.GetInt32(4) + " Клиент:" + reader.GetInt32(5) + " &";
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                 }
             }
         }
         connection.Close();
+        if (zapis_ag_and_kl == true)
+        { 
+            zapis_ag_kl("select distinct agent.Id, man.fam, man.name, man.otch from man, agent, klient where man.dop_info = agent.Id and klient.Id <> @ and agent.Id = @", "Риелтор:");
+            zapis_ag_kl("select distinct klient.Id, man.fam, man.name, man.otch from man, agent, klient where man.dop_info = klient.Id and agent.Id <> @ and klient.Id = @", "Клиент:");
+        }
         return data;
     }
 
@@ -146,6 +183,17 @@ class @base
         }
         connection.Close();
         return dat;
+    }
+
+    private void zapis_ag_kl(string zapr, string str_for_zamenu) 
+    {
+        MatchCollection matchs = Regex.Matches(data, str_for_zamenu + @"\S*");
+        foreach (Match item in matchs)
+        {
+            smena_zaprosa(zapr.Replace("@", item.ToString().Replace(str_for_zamenu, "")));
+            proverka_znachenei_v_bd();
+            data = data.Replace(item.ToString().Replace(str_for_zamenu, ""), fio);
+        }
     }
 }
 

@@ -118,11 +118,11 @@ namespace Риэлторское_агенство
             znachenia = @base.vuvod();
             zapis_v_combobox(cmb2);
             @base.smena_zaprosa("select obj.Id, obj.city, obj.street, obj.nm_h, obj.nm_kw, kw.etag, kw.rooms, kw.s from obj, kw where obj.dop_inf = kw.Id");
-            znachenia = @base.vuvod_obj("kw");
+            znachenia = @base.vuvod_obj("kw", false);
             @base.smena_zaprosa("select obj.Id, obj.city, obj.street, obj.nm_h, house.etag, house.rooms, house.s from obj, house where obj.dop_inf = house.Id");
-            znachenia += @base.vuvod_obj("house");
+            znachenia += @base.vuvod_obj("house", false);
             @base.smena_zaprosa("select obj.Id, obj.city, obj.street, land.s from obj, land where obj.dop_inf = land.Id");
-            znachenia += @base.vuvod_obj("land");
+            znachenia += @base.vuvod_obj("land", false);
             if (znachenia == "")
             {
                 znachenia = "Отсутствую данные в БД";
