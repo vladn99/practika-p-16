@@ -15,6 +15,7 @@ namespace Риэлторское_агенство
     {
         private string[] arr = null;
         private string[] arr_for_numbs_potr = null;
+        private string[] arr_for_numbs_predl = null;
         private string substr = "";
 
         public Form4()
@@ -31,8 +32,9 @@ namespace Риэлторское_агенство
 
         private void Form4_Load(object sender, EventArgs e)
         {
+            string s;
             @base @base = new @base("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_h.minetag, filter_h.maxetag, filter_h.minrooms, filter_h.maxrooms, filter_h.mins, filter_h.maxs from potr, filter_h where potr.dop_info = filter_h.Id and potr.obj = N'Дом'");
-            string s = @base.vuvod_zakazov("house");
+            s = @base.vuvod_zakazov("house");
             @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_kw.minetag, filter_kw.maxetag, filter_kw.minrooms, filter_kw.maxrooms, filter_kw.mins, filter_kw.maxs from potr, filter_kw where potr.dop_info = filter_kw.Id and potr.obj = N'Квартира'");
             s += @base.vuvod_zakazov("kw");
             @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_l.mins, filter_l.maxs from potr, filter_l where potr.dop_info = filter_l.Id and potr.obj = N'Земля'");
@@ -56,24 +58,40 @@ namespace Риэлторское_агенство
                 }
                 comboBox1.Items.AddRange(arr);
             }
+            s = "";
+            arr = null;
+            @base.smena_zaprosa("select obj.Id, obj.city, obj.street, obj.nm_h, house.etag, house.rooms, house.s, predlog.agent, predlog.klient from obj, house, predlog where obj.dop_inf = house.Id and obj.Id = predlog.obj and obj.nm_kw is null");
+            s += @base.vuvod_obj("house", true);
+            @base.smena_zaprosa("select obj.Id, obj.city, obj.street, obj.nm_h, obj.nm_kw, kw.etag, kw.rooms, kw.s, predlog.agent, predlog.klient from obj, kw, predlog where obj.dop_inf = kw.Id and obj.Id = predlog.obj and obj.nm_kw is not null");
+            s += @base.vuvod_obj("kw", true);
+            @base.smena_zaprosa("select obj.Id, obj.city, obj.street, land.s, predlog.agent, predlog.klient from obj, land, predlog where obj.dop_inf = land.Id and obj.Id = predlog.obj and obj.nm_kw is null and obj.nm_h is null");
+            s += @base.vuvod_obj("land", true);
+            if (s == "")
+                comboBox2.Items.Add("Отсутствуют данные в БД");
+            else
+            {
+                arr = s.Split('&');
+                comboBox2.Items.AddRange(arr);
+            }
         }
 
         private void comboBox1_TextChanged(object sender, EventArgs e)
         {
-            string str = comboBox1.Text;
-            char number;
-            foreach (var item in str)
-            {
-               number = item;
-               if (Char.IsDigit(number))
-               {
-                   substr += number;
-               }
-               else
-                   substr += " ";
-            }
-            substr = Regex.Replace(substr, @"\s+", " ");
-            arr_for_numbs_potr = substr.Split(' ');
+            //string str = comboBox1.Text;
+            //char number;
+            //foreach (var item in str)
+            //{
+            //   number = item;
+            //   if (Char.IsDigit(number))
+            //   {
+            //       substr += number;
+            //   }
+            //   else
+            //       substr += " ";
+            //}
+            //substr = Regex.Replace(substr, @"\s+", " ");
+            //arr_for_numbs_potr = substr.Split(' ');
+            arr_for_numbs_potr = polychenie_chisl_zn(comboBox1);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -81,9 +99,35 @@ namespace Риэлторское_агенство
             //string str = comboBox1.Text;
             //string city = Regex.Match(str, @"Город:\S*").ToString().Replace("Город:", "");
             //string street = Regex.Match(str, @"Улица:\S*").ToString().Replace("Улица:", "");
-            @base @base = new @base("select obj.Id, obj.city, obj.street, obj.nm_h, house.etag, house.rooms, house.s, predlog.agent, predlog.klient from obj, house, predlog where obj.dop_inf = house.Id and obj.Id = predlog.obj");
-            string ss = @base.vuvod_obj("house", true);
-            MessageBox.Show(ss);
+            //@base @base = new @base("select obj.Id, obj.city, obj.street, obj.nm_h, house.etag, house.rooms, house.s, predlog.agent, predlog.klient from obj, house, predlog where obj.dop_inf = house.Id and obj.Id = predlog.obj and obj.nm_kw is null");
+            //string ss = @base.vuvod_obj("house", true);
+            MessageBox.Show(arr_for_numbs_predl[0]);
+        }
+
+        private string [] polychenie_chisl_zn(ComboBox cmb) 
+        {
+            string[] array = null;
+            substr = "";
+            string str = cmb.Text;
+            char number;
+            foreach (var item in str)
+            {
+                number = item;
+                if (Char.IsDigit(number))
+                {
+                    substr += number;
+                }
+                else
+                    substr += " ";
+            }
+            substr = Regex.Replace(substr, @"\s+", " ");
+            array = substr.Split(' ');
+            return array;
+        }
+
+        private void comboBox2_TextChanged(object sender, EventArgs e)
+        {
+            arr_for_numbs_predl = polychenie_chisl_zn(comboBox2);
         }
     }
 }

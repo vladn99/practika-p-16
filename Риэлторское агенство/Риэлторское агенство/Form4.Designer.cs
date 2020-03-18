@@ -74,6 +74,7 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(1793, 28);
             this.comboBox2.TabIndex = 1;
+            this.comboBox2.TextChanged += new System.EventHandler(this.comboBox2_TextChanged);
             // 
             // tableLayoutPanel2
             // 
