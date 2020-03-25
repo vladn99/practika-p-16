@@ -19,6 +19,7 @@ class @base
     public @base(string sqlExpression) 
     {
         smena_zaprosa(sqlExpression);
+        AppDomain.CurrentDomain.SetData("DataDirectory", Application.StartupPath.Replace(@"\bin\Debug", ""));
     }
     public void zapis_v_bd() 
     {
@@ -94,7 +95,7 @@ class @base
                     {
                         data += reader.GetInt32(0) + " Дом Город:" + reader.GetString(1) + " Улица:" + reader.GetString(2) + " № дома:" + reader.GetInt32(3) + " Этажность:" + reader.GetInt32(4) + " Кол-во комнат:" + reader.GetInt32(5) + " Площадь:" + reader.GetInt32(6) + "&";
                         if (zapis_ag_and_kl == true)
-                            data = data.Remove(data.Length - 1, 1) + " Риелтор:" + reader.GetInt32(7) + " Клиент:" + reader.GetInt32(8)+ " &";
+                            data = data.Remove(data.Length - 1, 1) + " Риелтор:" + reader.GetInt32(7) + " Клиент:" + reader.GetInt32(8) + " &";
                     }
                     catch
                     {
@@ -192,8 +193,25 @@ class @base
         {
             smena_zaprosa(zapr.Replace("@", item.ToString().Replace(str_for_zamenu, "")));
             proverka_znachenei_v_bd();
-            data = data.Replace(item.ToString().Replace(str_for_zamenu, ""), fio);
+            data = data.Replace(str_for_zamenu + item.ToString(), str_for_zamenu + fio);
         }
+    }
+
+    public string get_cena() 
+    {
+        string time_str = "Цена:";
+        connection.Open();
+        SqlCommand command = new SqlCommand(sqlExpression, connection);
+        SqlDataReader reader = command.ExecuteReader();
+        if (reader.HasRows)
+        {
+            while (reader.Read())
+            {
+                time_str += reader.GetInt32(0);
+            }
+        }
+        connection.Close();
+        return time_str;
     }
 }
 
