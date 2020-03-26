@@ -193,7 +193,7 @@ class @base
         {
             smena_zaprosa(zapr.Replace("@", item.ToString().Replace(str_for_zamenu, "")));
             proverka_znachenei_v_bd();
-            data = data.Replace(str_for_zamenu + item.ToString(), str_for_zamenu + fio);
+            data = data.Replace(item.ToString(), str_for_zamenu + fio);
         }
     }
 
@@ -212,6 +212,23 @@ class @base
         }
         connection.Close();
         return time_str;
+    }
+
+    public string dealshear() 
+    {
+        string dlshr = "";
+        connection.Open();
+        SqlCommand command = new SqlCommand(sqlExpression, connection);
+        SqlDataReader reader = command.ExecuteReader();
+        if (reader.HasRows)
+        {
+            while (reader.Read())
+            {
+                dlshr += Convert.ToString(reader.GetInt32(0)) + "@";
+            }
+        }
+        connection.Close();
+        return dlshr.Remove(dlshr.Length - 1);
     }
 }
 
