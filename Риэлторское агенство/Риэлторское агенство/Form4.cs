@@ -312,6 +312,29 @@ namespace Риэлторское_агенство
                 s = s.Remove(s.Length - 1);
                 comboBox4.Items.Add(s);
                 comboBox4.SelectedItem = s;
+                @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_h.minetag, filter_h.maxetag, filter_h.minrooms, filter_h.maxrooms, filter_h.mins, filter_h.maxs from potr, filter_h, sdelka where potr.dop_info = filter_h.Id and potr.obj = N'Дом' and potr.Id = " + potrTextBox.Text + " and sdelka.potr = " + potrTextBox.Text + "");
+                b = @base.proverka_znachenei_v_bd();
+                if (b == true)
+                {
+                    s = @base.vuvod_zakazov("house");
+                }
+                else
+                {
+                    @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_kw.minetag, filter_kw.maxetag, filter_kw.minrooms, filter_kw.maxrooms, filter_kw.mins, filter_kw.maxs from potr, filter_kw, sdelka where potr.dop_info = filter_kw.Id and potr.obj = N'Квартира' and potr.Id = " + potrTextBox.Text + " and sdelka.potr = " + potrTextBox.Text + "");
+                    b = @base.proverka_znachenei_v_bd();
+                    if (b == true)
+                    {
+                        s = @base.vuvod_zakazov("kw");
+                    }
+                    else
+                    {
+                        @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_l.mins, filter_l.maxs from potr, filter_l, sdelka where potr.dop_info = filter_l.Id and potr.obj = N'Земля' and potr.Id = " + potrTextBox.Text + " and sdelka.potr = " + potrTextBox.Text + "");
+                        s = @base.vuvod_zakazov("land");
+                    }
+                }
+                s = s.Remove(s.Length - 1);
+                comboBox3.Items.Add(s);
+                comboBox3.SelectedItem = s;
             }
         }
     }
