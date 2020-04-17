@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
@@ -17,6 +10,7 @@ namespace Риэлторское_агенство
         private string[] arr_for_numbs_potr = null;
         private string[] arr_for_numbs_predl = null;
         private string substr = "";
+
         public Form4()
         {
             InitializeComponent();
@@ -46,27 +40,25 @@ namespace Риэлторское_агенство
         {
             arr_for_numbs_potr = polychenie_chisl_zn(comboBox1);
             if (comboBox1.Text != "" && comboBox2.Text != "")
-            {
                 raschet();
-            }
         }
-
+        //запись данных в БД
         private void button1_Click(object sender, EventArgs e)
         {
             Boolean rez;
             if (comboBox1.Text.Contains("Дом") == true && comboBox2.Text.Contains("Дом") == true)
             {
-                rez = srawnenie_predl_potr(2);
+                rez = srawnenie_predl_potr(2, comboBox1, comboBox2);
                 dlya_sokr(rez);
             }
             else if (comboBox1.Text.Contains("Квартира") == true && comboBox2.Text.Contains("Квартира") == true)
             {
-                rez = srawnenie_predl_potr(3);
+                rez = srawnenie_predl_potr(3, comboBox1, comboBox2);
                 dlya_sokr(rez);
             }
             else if (comboBox1.Text.Contains("Земля") == true && comboBox2.Text.Contains("Земля") == true)
             {
-                rez = srawnenie_predl_potr(1);
+                rez = srawnenie_predl_potr(1, comboBox1, comboBox2);
                 dlya_sokr(rez);
             }
             else
@@ -83,9 +75,7 @@ namespace Риэлторское_агенство
             {
                 number = item;
                 if (Char.IsDigit(number))
-                {
                     substr += number;
-                }
                 else
                     substr += " ";
             }
@@ -98,12 +88,10 @@ namespace Риэлторское_агенство
         {
             arr_for_numbs_predl = polychenie_chisl_zn(comboBox2);
             if (comboBox1.Text != "" && comboBox2.Text != "")
-            {
                 raschet();
-            }
         }
-
-        private Boolean srawnenie_predl_potr(int str_ind) 
+        //функция сравнивающая заказ и предложение
+        private Boolean srawnenie_predl_potr(int str_ind, ComboBox cmb1, ComboBox cmb2) 
         {
             int nesootv = 0;
             int j = 2;
@@ -116,16 +104,16 @@ namespace Риэлторское_агенство
                 j += 2;
             }
             Regex for_gorod = new Regex(@"Город:\w*\s"), for_street = new Regex(@"Улица:\w*\s");
-            Match gorod_predl = for_gorod.Match(comboBox2.Text), gorod_potr = for_gorod.Match(comboBox1.Text), 
-                street_predl = for_street.Match(comboBox2.Text), street_potr = for_street.Match(comboBox1.Text);
+            Match gorod_predl = for_gorod.Match(cmb2.Text), gorod_potr = for_gorod.Match(cmb1.Text), 
+                street_predl = for_street.Match(cmb2.Text), street_potr = for_street.Match(cmb1.Text);
             if (gorod_potr.ToString().Equals(gorod_predl.ToString()) == false)
             {
-                if (!(gorod_potr.ToString().Replace("Город:", "") == "") || !(gorod_potr.ToString().Replace("Город:", "") == "" && gorod_predl.ToString().Replace("Город:", "") == ""))
+                if (gorod_potr.ToString().Replace("Город:", "") == "" && gorod_predl.ToString().Replace("Город:", "") != "")
                     nesootv++;
             }
             if (street_potr.ToString().Equals(street_predl.ToString()) == false)
             {
-                if (!(street_potr.ToString().Replace("Улица:", "") == "") || !(street_potr.ToString().Replace("Улица:", "") == "" && street_predl.ToString().Replace("Улица:", "") == ""))
+                if (street_potr.ToString().Replace("Улица:", "") == "" && street_predl.ToString().Replace("Улица:", "") != "")
                     nesootv++;
             }
             if (nesootv > 0)
@@ -134,7 +122,7 @@ namespace Риэлторское_агенство
                 rez = true;
             return rez;
         }
-
+        //функция записи данных в бд
         private void dlya_sokr(Boolean rez) 
         {
             if (rez == false)
@@ -149,17 +137,16 @@ namespace Риэлторское_агенство
                 reboot_data_sdelka();
             }
         }
-
+        //обновление данных
         private void reboot(ComboBox cmb1, ComboBox cmb2) 
         {
-            //cmb1.Items.Clear();
-            //comboBox2.Items.Clear();
+            cmb1.Items.Clear();
             string s = "";
-            @base @base = new @base(izm_zapr("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_h.minetag, filter_h.maxetag, filter_h.minrooms, filter_h.maxrooms, filter_h.mins, filter_h.maxs from potr, filter_h, sdelka where potr.dop_info = filter_h.Id and potr.obj = N'Дом' and sdelka.potr <> potr.Id"));
+            @base @base = new @base(izm_zapr("select distinct potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_h.minetag, filter_h.maxetag, filter_h.minrooms, filter_h.maxrooms, filter_h.mins, filter_h.maxs from potr, filter_h, sdelka where potr.dop_info = filter_h.Id and potr.obj = N'Дом' and not potr.Id in (select potr from sdelka)"));
             s += @base.vuvod_zakazov("house");
-            @base.smena_zaprosa(izm_zapr("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_kw.minetag, filter_kw.maxetag, filter_kw.minrooms, filter_kw.maxrooms, filter_kw.mins, filter_kw.maxs from potr, filter_kw, sdelka where potr.dop_info = filter_kw.Id and potr.obj = N'Квартира' and sdelka.potr <> potr.Id"));
+            @base.smena_zaprosa(izm_zapr("select distinct potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_kw.minetag, filter_kw.maxetag, filter_kw.minrooms, filter_kw.maxrooms, filter_kw.mins, filter_kw.maxs from potr, filter_kw, sdelka where potr.dop_info = filter_kw.Id and potr.obj = N'Квартира' and not potr.Id in (select potr from sdelka)"));
             s += @base.vuvod_zakazov("kw");
-            @base.smena_zaprosa(izm_zapr("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_l.mins, filter_l.maxs from potr, filter_l, sdelka where potr.dop_info = filter_l.Id and potr.obj = N'Земля' and sdelka.potr <> potr.Id"));
+            @base.smena_zaprosa(izm_zapr("select distinct potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_l.mins, filter_l.maxs from potr, filter_l, sdelka where potr.dop_info = filter_l.Id and potr.obj = N'Земля' and not potr.Id in (select potr from sdelka)"));
             s += @base.vuvod_zakazov("land");
             cmb1.Items.Clear();
             if (s == "")
@@ -168,53 +155,27 @@ namespace Риэлторское_агенство
             {
                 s = s.Remove(s.Length - 1);
                 arr = s.Split('&');
-                for (int i = 0; i < arr.Length - 1; i++)
-                {
-                    int id_ag = Convert.ToInt32(arr[i].Substring(arr[i].IndexOf('Р')).Replace("Риэлтор:", "").Remove(arr[i].Substring(arr[i].IndexOf('Р')).Replace("Риэлтор:", "").IndexOf(" ")));
-                    int id_kl = Convert.ToInt32(arr[i].Substring(arr[i].LastIndexOf(':') + 1).Replace("Клиент:", "").Remove(arr[i].Substring(arr[i].LastIndexOf(':') + 1).Replace("Клиент:", "").IndexOf(" ")));
-                    @base.smena_zaprosa("select distinct agent.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_ag + " and klient.Id <> " + id_ag + " and man.dop_info = agent.Id");
-                    string per = @base.vuvod();
-                    arr[i] = arr[i].Replace("Риэлтор:" + id_ag.ToString(), "Риэлтор:" + per.Replace("&", ""));
-                    @base.smena_zaprosa("select distinct klient.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_kl + " and agent.Id <> " + id_kl + " and man.dop_info = klient.Id");
-                    per = @base.vuvod();
-                    arr[i] = arr[i].Replace("Клиент:" + id_kl.ToString(), "Клиент:" + per.Replace("&", ""));
-                }
-                cmb1.Items.AddRange(arr);
+                cmb1.Items.AddRange(get_fio(arr));
             }
             s = "";
             arr = null;
             cmb2.Items.Clear();
-            @base.smena_zaprosa(izm_zapr("select predlog.Id, obj.city, obj.street, obj.nm_h, house.etag, house.rooms, house.s, predlog.agent, predlog.klient from obj, house, predlog, sdelka where obj.dop_inf = house.Id and obj.Id = predlog.obj and obj.nm_kw is null and sdelka.predl <> predlog.Id"));
+            @base.smena_zaprosa(izm_zapr("select distinct predlog.Id, obj.city, obj.street, obj.nm_h, house.etag, house.rooms, house.s, predlog.agent, predlog.klient from obj, house, predlog, sdelka where obj.dop_inf = house.Id and obj.Id = predlog.obj and obj.nm_kw is null and not predlog.Id in (select predl from sdelka)"));
             s += @base.vuvod_obj("house", true);
-            @base.smena_zaprosa(izm_zapr("select predlog.Id, obj.city, obj.street, obj.nm_h, obj.nm_kw, kw.etag, kw.rooms, kw.s, predlog.agent, predlog.klient from obj, kw, predlog, sdelka where obj.dop_inf = kw.Id and obj.Id = predlog.obj and obj.nm_kw is not null and sdelka.predl <> predlog.Id"));
+            @base.smena_zaprosa(izm_zapr("select distinct predlog.Id, obj.city, obj.street, obj.nm_h, obj.nm_kw, kw.etag, kw.rooms, kw.s, predlog.agent, predlog.klient from obj, kw, predlog, sdelka where obj.dop_inf = kw.Id and obj.Id = predlog.obj and obj.nm_kw is not null and not predlog.Id in (select predl from sdelka)"));
             s += @base.vuvod_obj("kw", true);
-            @base.smena_zaprosa(izm_zapr("select predlog.Id, obj.city, obj.street, land.s, predlog.agent, predlog.klient from obj, land, predlog, sdelka where obj.dop_inf = land.Id and obj.Id = predlog.obj and obj.nm_kw is null and obj.nm_h is null and sdelka.predl <> predlog.Id"));
+            @base.smena_zaprosa(izm_zapr("select distinct predlog.Id, obj.city, obj.street, land.s, predlog.agent, predlog.klient from obj, land, predlog, sdelka where obj.dop_inf = land.Id and obj.Id = predlog.obj and obj.nm_kw is null and obj.nm_h is null and not predlog.Id in (select predl from sdelka)"));
             s += @base.vuvod_obj("land", true);
             if (s == "")
                 cmb2.Items.Add("Отсутствуют данные в БД");
             else
             {
-                string time_str;
                 s = s.Remove(s.Length - 1);
                 arr = s.Split('&');
-                for (int i = 0; i < arr.Length; i++)
-                {
-                    try
-                    {
-                        time_str = "";
-                        @base.smena_zaprosa("select cena from predlog where Id = " + arr[i].Remove(arr[i].IndexOf(" ")));
-                        time_str = @base.get_cena();
-                        arr[i] = arr[i].Insert(arr[i].Contains("Э") == true ? arr[i].IndexOf("Э") : arr[i].IndexOf("П"), " " + time_str + " ");
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
-                cmb2.Items.AddRange(arr);
+                cmb2.Items.AddRange(get_cena(arr));
             }
         }
-
+        //функция изменяющая запрос
         private string izm_zapr(string zapr) 
         {
             @base @base = new @base("select * from sdelka");
@@ -222,11 +183,11 @@ namespace Риэлторское_агенство
             if (pdf == false)
             {
                 zapr = zapr.Replace(", sdelka", "");
-                zapr = zapr.Contains("and sdelka.predl <> predlog.Id") == true ? zapr.Replace("and sdelka.predl <> predlog.Id", "") : zapr.Replace("and sdelka.potr <> potr.Id", "");
+                zapr = zapr.Contains("not potr.Id in (select potr from sdelka)") == true ? zapr.Replace("and not predlog.Id in (select predl from sdelka)", "") : zapr.Replace("and not potr.Id in (select potr from sdelka)", "");
             }
             return zapr;
         }
-
+        //функция расчета различных отчислений
         private void raschet() 
         {
             if (comboBox2.Text.Contains(" Дом ") == true)
@@ -261,15 +222,31 @@ namespace Риэлторское_агенство
             label6.Text = (Convert.ToDouble(label2.Text) - Convert.ToDouble(label4.Text)).ToString();
             label12.Text = (Convert.ToDouble(label8.Text) - Convert.ToDouble(label10.Text)).ToString();
         }
-
+        //сохранение изменений
         private void sdelkaBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
-            this.Validate();
-            this.sdelkaBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.baseDataSet);
-
+            arr_for_numbs_potr = polychenie_chisl_zn(comboBox3);
+            arr_for_numbs_predl = polychenie_chisl_zn(comboBox4);
+            Boolean rez;
+            if (comboBox3.Text.Contains("Дом") == true && comboBox4.Text.Contains("Дом") == true)
+            {
+                rez = srawnenie_predl_potr(2, comboBox3, comboBox4);
+                save_as(rez);
+            }
+            else if (comboBox3.Text.Contains("Квартира") == true && comboBox4.Text.Contains("Квартира") == true)
+            {
+                rez = srawnenie_predl_potr(3, comboBox3, comboBox4);
+                save_as(rez);
+            }
+            else if (comboBox3.Text.Contains("Земля") == true && comboBox4.Text.Contains("Земля") == true)
+            {
+                rez = srawnenie_predl_potr(1, comboBox3, comboBox4);
+                save_as(rez);
+            }
+            else
+                MessageBox.Show("Типы выбранных вами объектов не совпадают", "Предуприждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-
+        //обновление данных
         private void reboot_data_sdelka() 
         {
             // TODO: данная строка кода позволяет загрузить данные в таблицу "baseDataSet.sdelka". При необходимости она может быть перемещена или удалена.
@@ -277,6 +254,47 @@ namespace Риэлторское_агенство
         }
 
         private void tabControl1_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 1)
+                tab2();
+        }
+        //получение данных фио клиентов и риэлторов
+        private string[] get_fio(string[] time_arr)
+        {
+            for (int i = 0; i < time_arr.Length; i++)
+            {
+                @base @base = new @base("");
+                int id_ag = Convert.ToInt32(time_arr[i].Substring(time_arr[i].IndexOf('Р')).Replace("Риэлтор:", "").Remove(time_arr[i].Substring(time_arr[i].IndexOf('Р')).Replace("Риэлтор:", "").IndexOf(" ")));
+                int id_kl = Convert.ToInt32(time_arr[i].Substring(time_arr[i].LastIndexOf(':') + 1).Replace("Клиент:", "").Remove(time_arr[i].Substring(time_arr[i].LastIndexOf(':') + 1).Replace("Клиент:", "").IndexOf(" ")));
+                @base.smena_zaprosa("select distinct agent.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_ag + " and klient.Id <> " + id_ag + " and man.dop_info = agent.Id");
+                string per = @base.vuvod();
+                arr[i] = arr[i].Replace("Риэлтор:" + id_ag.ToString(), "Риэлтор:" + per.Replace("&", ""));
+                @base.smena_zaprosa("select distinct klient.Id, man.fam, man.name, man.otch from man, klient, agent where man.dop_info = " + id_kl + " and agent.Id <> " + id_kl + " and man.dop_info = klient.Id");
+                per = @base.vuvod();
+                time_arr[i] = time_arr[i].Replace("Клиент:" + id_kl.ToString(), "Клиент:" + per.Replace("&", ""));
+            }
+            return time_arr;
+        }
+        //сохранение изменений
+        private void save_as(bool rez)
+        {
+            if (rez == true)
+            {
+                potrTextBox.Text = arr_for_numbs_potr[0];
+                predlTextBox.Text = arr_for_numbs_predl[0];
+                this.Validate();
+                this.sdelkaBindingSource.EndEdit();
+                this.tableAdapterManager.UpdateAll(this.baseDataSet);
+                reboot_data_sdelka();
+                reboot(comboBox3, comboBox4);
+                reboot(comboBox1, comboBox2);
+                MessageBox.Show("Данные сохранены");
+            }
+            else
+                MessageBox.Show("Несоответствие предложения и потребности", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        //получение данных из БД и запись из в comboBox3, comboBox4
+        private void tab2()
         {
             reboot(comboBox3, comboBox4);
             if (idTextBox.Text == "")
@@ -292,17 +310,13 @@ namespace Риэлторское_агенство
                 @base @base = new @base("select predlog.Id, obj.city, obj.street, obj.nm_h, house.etag, house.rooms, house.s, predlog.agent, predlog.klient from obj, house, predlog where obj.dop_inf = house.Id and obj.Id = predlog.obj and obj.nm_kw is null and predlog.Id = " + predlTextBox.Text + "");
                 b = @base.proverka_znachenei_v_bd();
                 if (b == true)
-                {
                     s = @base.vuvod_obj("house", true);
-                }
                 else
                 {
                     @base.smena_zaprosa("select predlog.Id, obj.city, obj.street, obj.nm_h, obj.nm_kw, kw.etag, kw.rooms, kw.s, predlog.agent, predlog.klient from obj, kw, predlog where obj.dop_inf = kw.Id and obj.Id = predlog.obj and obj.nm_kw is not null and predlog.Id = " + predlTextBox.Text + "");
                     b = @base.proverka_znachenei_v_bd();
                     if (b == true)
-                    {
                         s = @base.vuvod_obj("kw", true);
-                    }
                     else
                     {
                         @base.smena_zaprosa("select predlog.Id, obj.city, obj.street, land.s, predlog.agent, predlog.klient from obj, land, predlog where obj.dop_inf = land.Id and obj.Id = predlog.obj and obj.nm_kw is null and obj.nm_h is null and predlog.Id = " + predlTextBox.Text + "");
@@ -310,22 +324,20 @@ namespace Риэлторское_агенство
                     }
                 }
                 s = s.Remove(s.Length - 1);
-                comboBox4.Items.Add(s);
-                comboBox4.SelectedItem = s;
+                arr = s.Split('&');
+                arr = get_cena(arr);
+                comboBox4.Items.Add(arr[0]);
+                comboBox4.SelectedItem = arr[0];
                 @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_h.minetag, filter_h.maxetag, filter_h.minrooms, filter_h.maxrooms, filter_h.mins, filter_h.maxs from potr, filter_h, sdelka where potr.dop_info = filter_h.Id and potr.obj = N'Дом' and potr.Id = " + potrTextBox.Text + " and sdelka.potr = " + potrTextBox.Text + "");
                 b = @base.proverka_znachenei_v_bd();
                 if (b == true)
-                {
                     s = @base.vuvod_zakazov("house");
-                }
                 else
                 {
                     @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_kw.minetag, filter_kw.maxetag, filter_kw.minrooms, filter_kw.maxrooms, filter_kw.mins, filter_kw.maxs from potr, filter_kw, sdelka where potr.dop_info = filter_kw.Id and potr.obj = N'Квартира' and potr.Id = " + potrTextBox.Text + " and sdelka.potr = " + potrTextBox.Text + "");
                     b = @base.proverka_znachenei_v_bd();
                     if (b == true)
-                    {
                         s = @base.vuvod_zakazov("kw");
-                    }
                     else
                     {
                         @base.smena_zaprosa("select potr.Id, potr.mincena, potr.maxcena, potr.agent, potr.klient, potr.city, potr.street, filter_l.mins, filter_l.maxs from potr, filter_l, sdelka where potr.dop_info = filter_l.Id and potr.obj = N'Земля' and potr.Id = " + potrTextBox.Text + " and sdelka.potr = " + potrTextBox.Text + "");
@@ -333,9 +345,63 @@ namespace Риэлторское_агенство
                     }
                 }
                 s = s.Remove(s.Length - 1);
-                comboBox3.Items.Add(s);
-                comboBox3.SelectedItem = s;
+                arr = s.Split('&');
+                arr = get_fio(arr);
+                comboBox3.Items.Add(arr[0]);
+                comboBox3.SelectedItem = arr[0];
             }
+        }
+
+        private void bindingNavigatorMoveNextItem_Click(object sender, EventArgs e)
+        {
+            tab2();
+        }
+
+        private void bindingNavigatorMovePreviousItem_Click(object sender, EventArgs e)
+        {
+            tab2();
+        }
+
+        private string[] get_cena(string[] time_arr)
+        {
+            string time_str;
+            @base @base = new @base("");
+            for (int i = 0; i < time_arr.Length; i++)
+            {
+                try
+                {
+                    time_str = "";
+                    @base.smena_zaprosa("select cena from predlog where Id = " + time_arr[i].Remove(time_arr[i].IndexOf(" ")));
+                    time_str = @base.get_cena();
+                    time_arr[i] = time_arr[i].Insert(time_arr[i].Contains("Э") == true ? time_arr[i].IndexOf("Э") : time_arr[i].IndexOf("П"), " " + time_str + " ");
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return time_arr;
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            @base @base = new @base("delete from sdelka where Id = " + idTextBox.Text + "");
+            @base.zapis_v_bd();
+            reboot_data_sdelka();
+            reboot(comboBox3, comboBox4);
+            reboot(comboBox1, comboBox2);
+            tab2();
+            MessageBox.Show("Данные удалены");
+        }
+
+        private void bindingNavigatorMoveLastItem_Click(object sender, EventArgs e)
+        {
+            tab2();
+        }
+
+        private void bindingNavigatorMoveFirstItem_Click(object sender, EventArgs e)
+        {
+            tab2();
         }
     }
 }

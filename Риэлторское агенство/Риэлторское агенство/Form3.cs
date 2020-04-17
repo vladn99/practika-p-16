@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Риэлторское_агенство
@@ -14,6 +7,7 @@ namespace Риэлторское_агенство
     {
         private string id_kl;
         private string id_mn;
+
         public Form3()
         {
             InitializeComponent();
@@ -26,7 +20,7 @@ namespace Риэлторское_агенство
             Form1 form1 = new Form1();
             form1.Show();
         }
-
+        //запись данных в БД
         private void button1_Click(object sender, EventArgs e)
         {
             string phone = maskedTextBox4.Text, mail = maskedTextBox5.Text;
@@ -54,7 +48,7 @@ namespace Риэлторское_агенство
             reboot();
             close_txb();
         }
-
+        //сохранение изменений
         private void klientBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
             this.Validate();
@@ -63,6 +57,7 @@ namespace Риэлторское_агенство
             this.tableAdapterManager.UpdateAll(this.baseDataSet);
 
         }
+        //обновление данных в manTableAdapter и klientTableAdapter
         private void reboot() 
         {
             // TODO: данная строка кода позволяет загрузить данные в таблицу "baseDataSet.man". При необходимости она может быть перемещена или удалена.
@@ -70,7 +65,7 @@ namespace Риэлторское_агенство
             // TODO: данная строка кода позволяет загрузить данные в таблицу "baseDataSet.klient". При необходимости она может быть перемещена или удалена.
             this.klientTableAdapter.Fill(this.baseDataSet.klient);
         }
-
+        //удаление данных из БД
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             open_txb();
@@ -94,12 +89,13 @@ namespace Риэлторское_агенство
         {
             reboot();
         }
+        //скрытие полей
         private void close_txb()
         {
             idTextBox.Visible = false;
             idTextBox1.Visible = false;
         }
-
+        //открытие полей
         private void open_txb()
         {
             idTextBox.Visible = true;
@@ -120,7 +116,7 @@ namespace Риэлторское_агенство
         {
             vvod_bukw(e);
         }
-
+        //ввод только буквенных значений
         private void vvod_bukw(KeyPressEventArgs e) 
         {
             char number = e.KeyChar;
@@ -129,7 +125,7 @@ namespace Риэлторское_агенство
                 e.Handled = true;
             }
         }
-
+        //ввод только цифр
         private void phoneTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;

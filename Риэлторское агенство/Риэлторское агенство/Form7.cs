@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Риэлторское_агенство
@@ -14,6 +7,7 @@ namespace Риэлторское_агенство
     {
         private string znachenia = "";
         private string[] arr = null;
+
         public Form7()
         {
             InitializeComponent();
@@ -26,7 +20,7 @@ namespace Риэлторское_агенство
             Form1 form1 = new Form1();
             form1.Show();
         }
-
+        //запись данных в бд
         private void button1_Click(object sender, EventArgs e)
         {
             if (comboBox1.Text == "" || comboBox2.Text == "" || comboBox3.Text == "" || textBox1.Text == "")
@@ -47,7 +41,7 @@ namespace Риэлторское_агенство
                 }
             }
         }
-
+        //сохранение изменений
         private void predlogBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
             open_txt();
@@ -73,7 +67,7 @@ namespace Риэлторское_агенство
             this.predlogTableAdapter.Fill(this.baseDataSet.predlog);
             dlya_sokrash();
         }
-
+        //Запись данных в comboBox
         private void zapis_v_combobox(ComboBox comboBox) 
         {
             arr = znachenia.Split('&');
@@ -99,16 +93,16 @@ namespace Риэлторское_агенство
         {
             dlya_sokrash();
         }
-
+        //ввод тлько цифр
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
+            if (!Char.IsDigit(number) && number != 8)
             {
                 e.Handled = true;
             }
         }
-
+        //получение данных
         private void get_data(ComboBox cmb1, ComboBox cmb2, ComboBox cmb3) 
         {
             @base @base = new @base("select distinct agent.Id, man.fam, man.name, man.otch from man, agent, klient where man.dop_info = agent.Id and agent.Id <> klient.Id");
@@ -129,7 +123,7 @@ namespace Риэлторское_агенство
             }
             zapis_v_combobox(cmb3);
         }
-
+        //получение определенных данных
         private void get_data_standart(ComboBox cmb1, TextBox cmb2) 
         {
             open_txt();
@@ -144,7 +138,7 @@ namespace Риэлторское_агенство
             cmb1.SelectedItem = per;
             clos_txt();
         }
-
+        //удаление данных
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             open_txt();
@@ -170,7 +164,7 @@ namespace Риэлторское_агенство
             get_data_standart(comboBox5, klientTextBox);
             get_data_standart(comboBox6, objTextBox);
         }
-
+        //скрытие полей
         private void clos_txt() 
         {
             agentTextBox.Visible = false;
@@ -178,7 +172,7 @@ namespace Риэлторское_агенство
             objTextBox.Visible = false;
             idTextBox.Visible = false;
         }
-
+        //открытие полей
         private void open_txt()
         {
             agentTextBox.Visible = true;
@@ -186,11 +180,11 @@ namespace Риэлторское_агенство
             objTextBox.Visible = true;
             idTextBox.Visible = true;
         }
-
+        //ввод только цифр
         private void cenaTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
+            if (!Char.IsDigit(number) && number != 8)
             {
                 e.Handled = true;
             }

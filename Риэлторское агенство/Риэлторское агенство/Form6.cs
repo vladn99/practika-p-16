@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Риэлторское_агенство
@@ -14,6 +7,7 @@ namespace Риэлторское_агенство
     {
         private string znachenia = "";
         private string[] arr = null;
+
         public Form6()
         {
             InitializeComponent();
@@ -33,7 +27,7 @@ namespace Риэлторское_агенство
             get_data(comboBox2, comboBox3);
             close_obj();
         }
-
+        //получение данных из БД
         private void get_data(ComboBox cmb1, ComboBox cmb2)
         {
             @base @base = new @base("select distinct agent.Id, man.fam, man.name, man.otch from man, agent, klient where man.dop_info = agent.Id and agent.Id <> klient.Id");
@@ -43,17 +37,16 @@ namespace Риэлторское_агенство
             znachenia = @base.vuvod();
             zapis_v_combobox(cmb2);
         }
-
+        //Запись данных в comboBox
         private void zapis_v_combobox(ComboBox comboBox)
         {
             comboBox.Items.Clear();
             arr = znachenia.Split('&');
             comboBox.Items.AddRange(arr);
         }
-
+        //получение определенных данных
         private void get_data_standart(ComboBox cmb1, TextBox cmb2)
         {
-            open_txt();
             string per = "";
             foreach (string item in cmb1.Items)
             {
@@ -63,41 +56,8 @@ namespace Риэлторское_агенство
                 }
             }
             cmb1.SelectedItem = per;
-            clos_txt();
         }
-
-        private void clos_txt()
-        {
-            //agentTextBox.Visible = false;
-            //klientTextBox.Visible = false;
-            //idTextBox.Visible = false;
-            //idTextBox1.Visible = false;
-            //agentTextBox1.Visible = false;
-            //klientTextBox1.Visible = false;
-            //idTextBox2.Visible = false;
-            //idTextBox3.Visible = false;
-            //agentTextBox2.Visible = false;
-            //klientTextBox2.Visible = false;
-            //idTextBox4.Visible = false;
-            //idTextBox5.Visible = false;
-        }
-
-        private void open_txt()
-        {
-            agentTextBox.Visible = true;
-            klientTextBox.Visible = true;
-            idTextBox.Visible = true;
-            idTextBox1.Visible = true;
-            agentTextBox1.Visible = true;
-            klientTextBox1.Visible = true;
-            idTextBox2.Visible = true;
-            idTextBox3.Visible = true;
-            agentTextBox2.Visible = true;
-            klientTextBox2.Visible = true;
-            idTextBox4.Visible = true;
-            idTextBox5.Visible = true;
-        }
-
+        //запись данных в бд
         private void button1_Click(object sender, EventArgs e)
         {
             if (comboBox1.Text == "" && comboBox2.Text == "" && comboBox3.Text == "")
@@ -161,60 +121,53 @@ namespace Риэлторское_агенство
                 close_obj();
                 groupBox2.Visible = true;
         }
-
+        //скрытие groupBox
         private void close_obj() 
         {
             groupBox1.Visible = false;
             groupBox2.Visible = false;
             groupBox3.Visible = false;
         }
-
+        //открытие groupBox
         private void open_obj()
         {
             groupBox1.Visible = true;
             groupBox3.Visible = true;
         }
-
+        //функция записи данных в бд 
         private void zapis_v_bd(string s) 
         {
             @base @base = new @base(s);
             @base.zapis_v_bd();
             MessageBox.Show("Данные записанны");
         }
-
+        //сохранение данных
         private void filter_hBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
-            open_txt();
             agentTextBox.Text = comboBox4.Text.Remove(comboBox4.Text.IndexOf(" "));
             klientTextBox.Text = comboBox5.Text.Remove(comboBox5.Text.IndexOf(" "));
-            clos_txt();
             this.Validate();
             this.filter_hBindingSource.EndEdit();
             this.potrBindingSource.EndEdit();
             this.filter_hTableAdapter.Update(this.baseDataSet);
             this.potrTableAdapter.Update(this.baseDataSet);
-
         }
-
+        //сохранение данных
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            open_txt();
             agentTextBox1.Text = comboBox6.Text.Remove(comboBox6.Text.IndexOf(" "));
             klientTextBox1.Text = comboBox7.Text.Remove(comboBox7.Text.IndexOf(" "));
-            clos_txt();
             this.Validate();
             this.filter_kwBindingSource.EndEdit();
             this.potrBindingSource1.EndEdit();
             this.filter_kwTableAdapter.Update(this.baseDataSet);
             this.potrTableAdapter.Update(this.baseDataSet);
         }
-
+        //сохранение данных
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            open_txt();
             agentTextBox2.Text = comboBox8.Text.Remove(comboBox8.Text.IndexOf(" "));
             klientTextBox2.Text = comboBox9.Text.Remove(comboBox9.Text.IndexOf(" "));
-            clos_txt();
             this.Validate();
             this.filter_lBindingSource.EndEdit();
             this.potrBindingSource2.EndEdit();
@@ -450,11 +403,9 @@ namespace Риэлторское_агенство
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            open_txt();
             delete(idTextBox, idTextBox1, "filter_h");
-            clos_txt();
         }
-
+        //удаление данных
         private void delete(TextBox txt1, TextBox txt2, string type) 
         {
             @base @base = new @base("select * from sdelka, potr where sdelka.potr = " + txt2.Text + "");
@@ -469,7 +420,7 @@ namespace Риэлторское_агенство
             else
                 MessageBox.Show("Данный объект учавствует в зделке", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
+        //обновление данных
         private void update_data() 
         {
             // TODO: данная строка кода позволяет загрузить данные в таблицу "baseDataSet.filter_l". При необходимости она может быть перемещена или удалена.
@@ -484,16 +435,12 @@ namespace Риэлторское_агенство
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            open_txt();
             delete(idTextBox2, idTextBox3, "filter_kw");
-            clos_txt();
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            open_txt();
             delete(idTextBox4, idTextBox5, "filter_l");
-            clos_txt();
         }
     }
 }

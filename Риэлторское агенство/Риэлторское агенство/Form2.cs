@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 
 namespace Риэлторское_агенство
 {
@@ -15,6 +7,7 @@ namespace Риэлторское_агенство
     {
         private string id_ag;
         private string id_mn;
+
         public Form2()
         {
             InitializeComponent();
@@ -27,7 +20,7 @@ namespace Риэлторское_агенство
             Form1 form1 = new Form1();
             form1.Show();
         }
-
+        //запись данных в БД
         private void button1_Click(object sender, EventArgs e)
         {
             agent agent = new agent(maskedTextBox1.Text, maskedTextBox2.Text, maskedTextBox3.Text, (int)numericUpDown1.Value);
@@ -38,16 +31,8 @@ namespace Риэлторское_агенство
                 "insert into man (fam, name, otch, dop_info) values (N'" + agent.get_fam() + "', N'" + agent.get_name() + "', N'" + agent.get_oth() + "', @id)");
             @base.zapis_v_bd();
             MessageBox.Show("Данные записанны");
-            //try добавить проверку заполненности полей
-            //{
-
-            //}
-            //catch 
-            //{
-            //    MessageBox.Show("Заполните путсые поля","Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); 
-            //}
         }
-
+        //сохранение изменений
         private void agentBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
             this.Validate();
@@ -62,7 +47,8 @@ namespace Риэлторское_агенство
             reboot();
             close_txb();
         }
-        private void reboot() 
+        //обновление данных в manTableAdapter и agentTableAdapter
+        private void reboot()
         {
             // TODO: данная строка кода позволяет загрузить данные в таблицу "baseDataSet.man". При необходимости она может быть перемещена или удалена.
             this.manTableAdapter.Fill(this.baseDataSet.man);
@@ -74,7 +60,7 @@ namespace Риэлторское_агенство
         {
             reboot();
         }
-
+        //удаление данных из БД
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             open_txb();
@@ -93,19 +79,19 @@ namespace Риэлторское_агенство
             else
                 MessageBox.Show("Данный риэлтор принимает участие в сделке и не может быть удален.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
+        //скрытие полей
         private void close_txb() 
         {
             idTextBox.Visible = false;
             idTextBox1.Visible = false;
         }
-
+        //открытие полей
         private void open_txb()
         {
             idTextBox.Visible = true;
             idTextBox1.Visible = true;
         }
-
+        //ввод только буквенных значений
         private void vvod_bukw(KeyPressEventArgs e)
         {
             char number = e.KeyChar;
@@ -129,7 +115,7 @@ namespace Риэлторское_агенство
         {
             vvod_bukw(e);
         }
-
+        //ввод только цифр
         private void dealShareTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;

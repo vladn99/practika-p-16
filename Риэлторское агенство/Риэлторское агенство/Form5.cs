@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Риэлторское_агенство
@@ -15,6 +8,7 @@ namespace Риэлторское_агенство
         private string id_ob;
         private string id_dopinf;
         private string type;
+
         public Form5()
         {
             InitializeComponent();
@@ -30,19 +24,18 @@ namespace Риэлторское_агенство
 
         private void Form5_Load(object sender, EventArgs e)
         {
-            //// TODO: данная строка кода позволяет загрузить данные в таблицу "baseDataSet.land". При необходимости она может быть перемещена или удалена.
-            //this.landTableAdapter.Fill(this.baseDataSet.land);
             reboot();
             close_txb();
             close();
         }
-
+        //скрытие groupBox
         private void close() 
         {
             groupBox1.Visible = false;
             groupBox3.Visible = false;
             groupBox4.Visible = false;
         }
+        //обновление данных
         private void reboot() 
         {
             // TODO: данная строка кода позволяет загрузить данные в таблицу "baseDataSet.obj". При необходимости она может быть перемещена или удалена.
@@ -56,7 +49,7 @@ namespace Риэлторское_агенство
             // TODO: данная строка кода позволяет загрузить данные в таблицу "baseDataSet.land". При необходимости она может быть перемещена или удалена.
             this.landTableAdapter.Fill(this.baseDataSet.land);
         }
-
+        //запись данных в БД
         private void button1_Click(object sender, EventArgs e)
         {
             @base @base;
@@ -114,7 +107,7 @@ namespace Риэлторское_агенство
             close();
             groupBox4.Visible = true;
         }
-
+        //сохранение изменений объекта дом
         private void houseBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
             this.Validate();
@@ -138,6 +131,7 @@ namespace Риэлторское_агенство
         {
             reboot();
         }
+        //скрытие полей
         private void close_txb()
         {
             idTextBox.Visible = false;
@@ -147,7 +141,7 @@ namespace Риэлторское_агенство
             idTextBox5.Visible = false;
             idTextBox4.Visible = false;
         }
-
+        //открытие полей
         private void open_txb()
         {
             idTextBox.Visible = true;
@@ -157,7 +151,7 @@ namespace Риэлторское_агенство
             idTextBox4.Visible = true;
             idTextBox5.Visible = true;
         }
-
+        //сохранение изменений объекта квартира
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             this.Validate();
@@ -176,7 +170,7 @@ namespace Риэлторское_агенство
             type = "kw";
             del(type, id_ob, id_dopinf);
         }
-
+        //удаление объекта
         private void del(string type, string id_obj, string id_dopinf) 
         {
             Boolean rez1;
@@ -192,7 +186,7 @@ namespace Риэлторское_агенство
                 MessageBox.Show("Удаление объекта завершено", "Сообщение");
             }
         }
-
+        //сохранение изменений объекта земля
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             this.Validate();
@@ -211,7 +205,7 @@ namespace Риэлторское_агенство
             type = "land";
             del(type, id_ob, id_dopinf);
         }
-
+        //ввод только буквенных значений
         private void vvod_bukw(KeyPressEventArgs e)
         {
             char number = e.KeyChar;
@@ -220,7 +214,7 @@ namespace Риэлторское_агенство
                 e.Handled = true;
             }
         }
-
+        //ввод только цифр
         private void vvod_numb(KeyPressEventArgs e)
         {
             char number = e.KeyChar;

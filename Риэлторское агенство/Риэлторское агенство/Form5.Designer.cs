@@ -1239,7 +1239,6 @@
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Положение";
             this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 23);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -1472,7 +1471,6 @@
             // 
             this.bindingNavigatorPositionItem1.AccessibleName = "Положение";
             this.bindingNavigatorPositionItem1.AutoSize = false;
-            this.bindingNavigatorPositionItem1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem1.Name = "bindingNavigatorPositionItem1";
             this.bindingNavigatorPositionItem1.Size = new System.Drawing.Size(50, 23);
             this.bindingNavigatorPositionItem1.Text = "0";
@@ -1546,7 +1544,7 @@
             this.cityTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cityTextBox1.Location = new System.Drawing.Point(148, 73);
             this.cityTextBox1.Name = "cityTextBox1";
-            this.cityTextBox1.Size = new System.Drawing.Size(100, 31);
+            this.cityTextBox1.Size = new System.Drawing.Size(206, 31);
             this.cityTextBox1.TabIndex = 11;
             this.cityTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cityTextBox1_KeyPress);
             // 
@@ -1556,7 +1554,7 @@
             this.streetTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.streetTextBox1.Location = new System.Drawing.Point(148, 136);
             this.streetTextBox1.Name = "streetTextBox1";
-            this.streetTextBox1.Size = new System.Drawing.Size(100, 31);
+            this.streetTextBox1.Size = new System.Drawing.Size(206, 31);
             this.streetTextBox1.TabIndex = 13;
             this.streetTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.streetTextBox1_KeyPress);
             // 
@@ -1730,7 +1728,6 @@
             // 
             this.bindingNavigatorPositionItem2.AccessibleName = "Положение";
             this.bindingNavigatorPositionItem2.AutoSize = false;
-            this.bindingNavigatorPositionItem2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem2.Name = "bindingNavigatorPositionItem2";
             this.bindingNavigatorPositionItem2.Size = new System.Drawing.Size(50, 23);
             this.bindingNavigatorPositionItem2.Text = "0";
